@@ -63,8 +63,8 @@ export async function fetchGitHubUser(): Promise<GitHubUser | null> {
       headers: {
         Accept: "application/vnd.github.v3+json",
         // Add GitHub token if available for higher rate limits
-        ...(process.env.GITHUB_TOKEN && {
-          Authorization: `token ${process.env.GITHUB_TOKEN}`,
+        ...(process.env.TOKEN && {
+          Authorization: `token ${process.env.TOKEN}`,
         }),
       },
       next: { revalidate: 3600 }, // Revalidate every hour
@@ -103,8 +103,8 @@ export async function fetchGitHubRepos(
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-          ...(process.env.GITHUB_TOKEN && {
-            Authorization: `token ${process.env.GITHUB_TOKEN}`,
+          ...(process.env.TOKEN && {
+            Authorization: `token ${process.env.TOKEN}`,
           }),
         },
         next: { revalidate: 3600 },
@@ -150,8 +150,8 @@ export async function fetchAllGitHubRepos(): Promise<GitHubRepo[]> {
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-          ...(process.env.GITHUB_TOKEN && {
-            Authorization: `token ${process.env.GITHUB_TOKEN}`,
+          ...(process.env.TOKEN && {
+            Authorization: `token ${process.env.TOKEN}`,
           }),
         },
         next: { revalidate: 3600 },
