@@ -61,13 +61,14 @@ jobs:
 
       - name: Rehome exported files under /portfolio (Pages expects this)
         run: |
-          echo "Moving exported files into out/portfolio to match basePath"
+          echo "Safely moving exported files into out/portfolio to match basePath"
           mkdir -p out/portfolio
-          for entry in out/* out/.[!.]* out/..?*; do
-            if [ -e "$entry" ] && [ "$entry" != "out/portfolio" ]; then
-              mv "$entry" out/portfolio/ || true
-            fi
-          done
+          # Move top-level entries except the target folder itself to avoid self-move
+          find out -mindepth 1 -maxdepth 1 -not -name portfolio -exec mv {} out/portfolio/ \; || true
+          echo "-- out/ after move --"
+          ls -la out || true
+          echo "-- out/portfolio/ after move --"
+          ls -la out/portfolio || true
           touch out/portfolio/.nojekyll
 
       - name: Upload artifact
