@@ -31,7 +31,7 @@ export function EnhancedHeroSection() {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16"
+      className="relative w-full min-h-screen flex items-center justify-center pt-16"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">

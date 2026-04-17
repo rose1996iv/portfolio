@@ -153,7 +153,7 @@ export function EnhancedNavbar() {
           height: isOpen ? "auto" : 0,
         }}
         transition={{ duration: 0.3 }}
-        className="md:hidden overflow-hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-700/50"
+        className="md:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-700/50"
       >
         <div className="px-4 py-4 space-y-2">
           {navItems.map((item) => (

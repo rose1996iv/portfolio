@@ -32,7 +32,7 @@ export default function Home() {
   const statistics = profile.statistics || [];
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-slate-900 text-foreground">
+    <main className="relative w-full bg-slate-900 text-foreground">
       {/* Noise overlay */}
       <div className="noise-overlay pointer-events-none fixed inset-0 z-0 opacity-[0.035]" />
 
