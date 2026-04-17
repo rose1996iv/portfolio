@@ -19,6 +19,7 @@ import { SkillsGrid } from "@/components/skills-grid";
 import { AchievementsGrid } from "@/components/achievements-grid";
 import { CertificationsGrid } from "@/components/certifications-grid";
 import { ProjectCard } from "@/components/project-card";
+import { MatrixBackground } from "@/components/matrix-background";
 
 import { profile } from "@/lib/profile-v2";
 
@@ -35,6 +36,9 @@ export default function Home() {
     <main className="relative w-full bg-slate-900 text-foreground">
       {/* Noise overlay */}
       <div className="noise-overlay pointer-events-none fixed inset-0 z-0 opacity-[0.035]" />
+
+      {/* Matrix Background */}
+      <MatrixBackground />
 
       {/* Navigation */}
       <EnhancedNavbar />
