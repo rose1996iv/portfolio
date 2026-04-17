@@ -2,6 +2,7 @@ import { fetchAllGitHubRepos, fetchGitHubStats } from "@/lib/github";
 import { profile } from "@/lib/profile";
 import { sortBy } from "@/lib/utils";
 
+
 /**
  * Dynamic portfolio data that merges static profile with GitHub data
  * This component fetches data at build time and caches it
@@ -22,9 +23,6 @@ export async function getDynamicPortfolioData() {
       featuredRepoNames.includes(repo.name)
     );
 
-    // Sort featured repos by stars
-    const sortedFeaturedRepos = sortBy(featuredRepos, "stargazers_count", true);
-
     // Extract unique languages from all repos
     const languages = new Set<string>();
     repos.forEach((repo) => {
@@ -40,7 +38,7 @@ export async function getDynamicPortfolioData() {
       },
       // Update projects with live GitHub data
       projects: profile.projects.map((staticProject) => {
-        const liveRepo = repos.find(
+        const liveRepo = featuredRepos.find(
           (r) => r.url === staticProject.repo
         );
         return {
@@ -54,6 +52,7 @@ export async function getDynamicPortfolioData() {
       allRepos: sortBy(repos, "stargazers_count", true),
       // Detected languages
       detectedLanguages: Array.from(languages).sort(),
+      featuredRepos,
     };
   } catch (error) {
     console.error("Failed to fetch dynamic portfolio data:", error);

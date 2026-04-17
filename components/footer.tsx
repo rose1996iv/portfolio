@@ -1,4 +1,4 @@
-import { Github, Globe, Linkedin, Mail, MapPin, Heart, ArrowUp } from "lucide-react";
+import { Github, Linkedin, Mail, MapPin, Heart, ArrowUp } from "lucide-react";
 import { motion } from "framer-motion";
 import { profile } from "@/lib/profile";
 
@@ -9,13 +9,11 @@ export function Footer() {
       name: "GitHub",
       href: profile.githubUrl,
       icon: Github,
-      label: "@rose1996iv",
     },
     {
       name: "LinkedIn",
       href: profile.linkedinUrl,
       icon: Linkedin,
-      label: "Joseph",
     },
   ];
 
@@ -68,7 +66,7 @@ export function Footer() {
               Social
             </h4>
             <div className="space-y-2">
-              {socialLinks.map(({ name, href, icon: Icon, label }) => (
+              {socialLinks.map(({ name, href, icon: Icon }) => (
                 <a
                   key={name}
                   href={href}

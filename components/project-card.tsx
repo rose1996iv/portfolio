@@ -4,7 +4,6 @@ import {
   ExternalLink,
   Github,
   Star,
-  type LucideIcon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { formatRelativeTime, cn, getLanguageColor } from "@/lib/utils";

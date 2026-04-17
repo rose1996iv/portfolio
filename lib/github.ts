@@ -32,8 +32,8 @@ interface GitHubUser {
   updated_at: string;
 }
 
-interface CachedData {
-  data: any;
+interface CachedData<T = unknown> {
+  data: T;
   timestamp: number;
 }
 
@@ -55,7 +55,7 @@ export async function fetchGitHubUser(): Promise<GitHubUser | null> {
   const cacheKey = `user:${GITHUB_USERNAME}`;
 
   if (isCacheValid(cacheKey)) {
-    return cache.get(cacheKey)?.data || null;
+    return (cache.get(cacheKey) as CachedData<GitHubUser> | undefined)?.data || null;
   }
 
   try {
@@ -94,7 +94,7 @@ export async function fetchGitHubRepos(
   const cacheKey = `repos:${GITHUB_USERNAME}:${topics.join(",")}`;
 
   if (isCacheValid(cacheKey)) {
-    return cache.get(cacheKey)?.data || [];
+    return (cache.get(cacheKey) as CachedData<GitHubRepo[]> | undefined)?.data || [];
   }
 
   try {
@@ -141,7 +141,7 @@ export async function fetchAllGitHubRepos(): Promise<GitHubRepo[]> {
   const cacheKey = `repos:${GITHUB_USERNAME}:all`;
 
   if (isCacheValid(cacheKey)) {
-    return cache.get(cacheKey)?.data || [];
+    return (cache.get(cacheKey) as CachedData<GitHubRepo[]> | undefined)?.data || [];
   }
 
   try {
