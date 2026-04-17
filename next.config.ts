@@ -1,16 +1,17 @@
 import type { NextConfig } from "next";
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "/portfolio";
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  
-  // Static export for GitHub Pages
+
+  basePath,
   output: "export",
-  
-  // Production optimizations
+  trailingSlash: true,
   compress: true,
-  
-  // Image optimization
+
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

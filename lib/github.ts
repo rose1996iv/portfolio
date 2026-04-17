@@ -6,6 +6,7 @@
 
 const GITHUB_USERNAME = "rose1996iv";
 const GITHUB_API_BASE = "https://api.github.com";
+const githubToken = process.env.GITHUB_TOKEN || process.env.TOKEN || "";
 
 // Cache duration in milliseconds (5 minutes)
 const CACHE_DURATION = 5 * 60 * 1000;
@@ -15,6 +16,7 @@ interface GitHubRepo {
   name: string;
   description: string | null;
   url: string;
+  html_url: string;
   language: string | null;
   stargazers_count: number;
   updated_at: string;
@@ -62,9 +64,8 @@ export async function fetchGitHubUser(): Promise<GitHubUser | null> {
     const response = await fetch(`${GITHUB_API_BASE}/users/${GITHUB_USERNAME}`, {
       headers: {
         Accept: "application/vnd.github.v3+json",
-        // Add GitHub token if available for higher rate limits
-        ...(process.env.TOKEN && {
-          Authorization: `token ${process.env.TOKEN}`,
+        ...(githubToken && {
+          Authorization: `Bearer ${githubToken}`,
         }),
       },
       next: { revalidate: 3600 }, // Revalidate every hour
@@ -103,8 +104,8 @@ export async function fetchGitHubRepos(
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-          ...(process.env.TOKEN && {
-            Authorization: `token ${process.env.TOKEN}`,
+          ...(githubToken && {
+            Authorization: `Bearer ${githubToken}`,
           }),
         },
         next: { revalidate: 3600 },
@@ -120,9 +121,7 @@ export async function fetchGitHubRepos(
 
     // Filter repos by topics if specified
     if (topics.length > 0) {
-      repos = repos.filter((repo) =>
-        repo.topics.some((topic) => topics.includes(topic))
-      );
+      repos = repos.filter((repo) => repo.topics.some((topic) => topics.includes(topic)));
     }
 
     cache.set(cacheKey, { data: repos, timestamp: Date.now() });
@@ -150,8 +149,8 @@ export async function fetchAllGitHubRepos(): Promise<GitHubRepo[]> {
       {
         headers: {
           Accept: "application/vnd.github.v3+json",
-          ...(process.env.TOKEN && {
-            Authorization: `token ${process.env.TOKEN}`,
+          ...(githubToken && {
+            Authorization: `Bearer ${githubToken}`,
           }),
         },
         next: { revalidate: 3600 },

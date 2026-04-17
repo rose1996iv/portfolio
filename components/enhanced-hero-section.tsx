@@ -1,24 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { ArrowDown, Github, Linkedin, Mail } from "lucide-react";
+import { profile } from "@/lib/profile-v2";
 import { ShinyButton } from "./magicui/shiny-button";
 
 export function EnhancedHeroSection() {
   const socialLinks = [
     {
       icon: Github,
-      href: "https://github.com/rose1996iv",
+      href: profile.social.github,
       label: "GitHub",
     },
     {
       icon: Linkedin,
-      href: "https://www.linkedin.com/in/joseph-61734a17a",
+      href: profile.social.linkedin,
       label: "LinkedIn",
     },
     {
       icon: Mail,
-      href: "mailto:josephsaimonn@gmail.com",
+      href: `mailto:${profile.email}`,
       label: "Email",
     },
   ];
@@ -31,7 +33,7 @@ export function EnhancedHeroSection() {
   return (
     <section
       id="home"
-      className="relative w-full min-h-screen flex items-center justify-center pt-16"
+      className="relative flex min-h-[92svh] w-full items-center justify-center pt-16"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
@@ -43,23 +45,7 @@ export function EnhancedHeroSection() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(34,197,94,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(34,197,94,0.1)_1px,transparent_1px)] bg-[size:50px_50px]" />
         </div>
 
-        {/* Glow orbs */}
-        <motion.div
-          animate={{
-            x: [0, 50, 0],
-            y: [0, 30, 0],
-          }}
-          transition={{ duration: 20, repeat: Infinity }}
-          className="absolute top-20 right-20 w-96 h-96 bg-emeraldx/20 rounded-full blur-3xl opacity-30"
-        />
-        <motion.div
-          animate={{
-            x: [0, -50, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{ duration: 25, repeat: Infinity }}
-          className="absolute bottom-20 left-20 w-96 h-96 bg-cyanx/20 rounded-full blur-3xl opacity-30"
-        />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-slate-900 to-transparent" />
       </div>
 
       {/* Content */}
@@ -69,12 +55,18 @@ export function EnhancedHeroSection() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-6"
+          className="mb-6 flex justify-center"
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emeraldx/10 border border-emeraldx/30 text-emeraldx text-sm font-medium">
-            <span className="w-2 h-2 bg-emeraldx rounded-full animate-pulse" />
-            Welcome to My Portfolio
-          </span>
+          <div className="relative rounded-full border border-emeraldx/40 bg-slate-950/70 p-1 shadow-glow">
+            <Image
+              src="https://github.com/rose1996iv.png"
+              alt={`${profile.name} profile avatar`}
+              width={104}
+              height={104}
+              priority
+              className="h-24 w-24 rounded-full object-cover"
+            />
+          </div>
         </motion.div>
 
         {/* Main Title */}
@@ -89,7 +81,9 @@ export function EnhancedHeroSection() {
               Hi, I&apos;m
             </span>
             <br />
-            <span className="bg-gradient-to-r from-emeraldx via-cyanx to-emeraldx bg-clip-text text-transparent">Joseph</span>
+            <span className="bg-gradient-to-r from-emeraldx via-cyanx to-emeraldx bg-clip-text text-transparent">
+              {profile.name}
+            </span>
           </h1>
         </motion.div>
 
@@ -101,16 +95,9 @@ export function EnhancedHeroSection() {
           className="mb-8"
         >
           <p className="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            CS Researcher specializing in <span className="text-emeraldx font-semibold">Cybersecurity</span>,{" "}
-            <span className="text-cyanx font-semibold">Adversarial ML</span>, and{" "}
-            <span className="text-emeraldx font-semibold">AI Security</span>.
+            {profile.subtitle}
           </p>
-          <p className="text-sm text-slate-400 mt-3">
-            Building certified robust neural networks and malware defense systems at GEHU.
-          </p>
-          <p className="text-sm text-slate-400 mt-3">
-            Building certified robust neural networks and malware defense systems at GEHU.
-          </p>
+          <p className="text-sm text-slate-400 mt-3">{profile.bio}</p>
         </motion.div>
 
         {/* CTA Buttons */}
@@ -120,15 +107,12 @@ export function EnhancedHeroSection() {
           transition={{ duration: 0.8, delay: 0.6 }}
           className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
         >
-          <ShinyButton
-            onClick={() => scrollToSection("projects")}
-            className="text-base"
-          >
+          <ShinyButton onClick={() => scrollToSection("projects")} className="text-base">
             View My Work
           </ShinyButton>
 
           <motion.a
-            href="https://github.com/rose1996iv"
+            href={profile.social.github}
             target="_blank"
             rel="noopener noreferrer"
             whileHover={{ scale: 1.05 }}

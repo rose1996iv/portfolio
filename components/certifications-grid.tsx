@@ -9,32 +9,16 @@ interface CertificationsGridProps {
   maxItems?: number;
 }
 
-export function CertificationsGrid({
-  certifications,
-  maxItems = 12,
-}: CertificationsGridProps) {
+export function CertificationsGrid({ certifications, maxItems = 12 }: CertificationsGridProps) {
   const displayCertifications = certifications.slice(0, maxItems);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      {displayCertifications.map((cert, index) => (
-        <motion.div
-          key={index}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: index * 0.05 }}
-          viewport={{ once: true }}
-          whileHover={{ y: -4 }}
-          className="group"
-        >
-          <a
-            href={cert.credentialUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`block h-full bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-lg p-6 backdrop-blur-sm hover:border-cyanx/50 transition-all ${
-              !cert.credentialUrl ? "cursor-default" : ""
-            }`}
-          >
+      {displayCertifications.map((cert, index) => {
+        const cardClass =
+          "relative block h-full overflow-hidden bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-lg p-6 backdrop-blur-sm hover:border-cyanx/50 transition-all";
+        const content = (
+          <>
             {/* Top accent */}
             <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-cyanx/10 to-transparent rounded-bl-full" />
 
@@ -49,9 +33,7 @@ export function CertificationsGrid({
                 {cert.name}
               </h3>
 
-              <p className="text-sm text-emeraldx font-medium mb-3">
-                {cert.issuer}
-              </p>
+              <p className="text-sm text-emeraldx font-medium mb-3">{cert.issuer}</p>
 
               {/* Date and Credential */}
               <div className="flex items-center justify-between">
@@ -70,9 +52,34 @@ export function CertificationsGrid({
 
             {/* Border glow on hover */}
             <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyanx/20 to-emeraldx/20 opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none" />
-          </a>
-        </motion.div>
-      ))}
+          </>
+        );
+
+        return (
+          <motion.div
+            key={`${cert.issuer}-${cert.name}`}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: index * 0.05 }}
+            viewport={{ once: true }}
+            whileHover={{ y: -4 }}
+            className="group"
+          >
+            {cert.credentialUrl ? (
+              <a
+                href={cert.credentialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cardClass}
+              >
+                {content}
+              </a>
+            ) : (
+              <div className={cardClass}>{content}</div>
+            )}
+          </motion.div>
+        );
+      })}
     </div>
   );
 }

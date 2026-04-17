@@ -1,13 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Briefcase,
-  BookOpen,
-  Award,
-  Code2,
-  Zap,
-} from "lucide-react";
+import { Briefcase, BookOpen, Award, Code2, Zap } from "lucide-react";
 
 import { EnhancedNavbar } from "@/components/enhanced-navbar";
 import { EnhancedHeroSection } from "@/components/enhanced-hero-section";
@@ -63,16 +57,12 @@ export default function Home() {
             className="lg:col-span-2 space-y-6"
           >
             <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 border border-slate-700/50 rounded-lg p-6 backdrop-blur-sm">
-              <p className="text-lg text-slate-300 leading-relaxed">
-                {profile.summary}
-              </p>
+              <p className="text-lg text-slate-300 leading-relaxed">{profile.summary}</p>
             </div>
 
             {/* Thesis Info */}
             <div className="bg-gradient-to-br from-emeraldx/10 to-cyanx/10 border border-emeraldx/30 rounded-lg p-6">
-              <h3 className="text-xl font-semibold text-emeraldx mb-3">
-                🔬 Research Focus
-              </h3>
+              <h3 className="text-xl font-semibold text-emeraldx mb-3">Research Focus</h3>
               <p className="text-slate-300 mb-3">{profile.thesis.focus}</p>
               <div className="flex flex-wrap gap-2">
                 {profile.thesis.keywords.map((keyword) => (

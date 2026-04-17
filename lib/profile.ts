@@ -37,7 +37,7 @@ export const profile = {
   email: "josephsaimonn@gmail.com",
   linkedinUrl: "https://www.linkedin.com/in/joseph-61734a17a",
   githubUrl: "https://github.com/rose1996iv",
-  portfolioUrl: "https://joseph1997-eng.github.io/portfolio-/",
+  portfolioUrl: "https://rose1996iv.github.io/portfolio/",
   summary:
     "M.Tech Computer Science & Engineering student specializing in Cybersecurity, AI, and Data Science, building research-grade AI systems, malware defense pipelines, and community-focused software.",
   education: [

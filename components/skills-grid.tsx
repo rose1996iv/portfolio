@@ -22,11 +22,46 @@ export function SkillsGrid({ skills, showCategory = true }: SkillsGridProps) {
     : { All: skills };
 
   const categoryColors = {
-    Frontend: { bg: "from-blue-500/20 to-blue-600/20", border: "border-blue-400/30", text: "text-blue-400" },
-    Backend: { bg: "from-purple-500/20 to-purple-600/20", border: "border-purple-400/30", text: "text-purple-400" },
-    "AI/ML": { bg: "from-emeraldx/20 to-cyanx/20", border: "border-emeraldx/30", text: "text-emeraldx" },
-    DevOps: { bg: "from-orange-500/20 to-red-600/20", border: "border-orange-400/30", text: "text-orange-400" },
-    Other: { bg: "from-slate-500/20 to-slate-600/20", border: "border-slate-400/30", text: "text-slate-400" },
+    Frontend: {
+      bg: "from-blue-500/20 to-cyan-500/20",
+      border: "border-blue-400/30",
+      text: "text-blue-300",
+      iconBg: "bg-blue-500/10",
+      shadow: "hover:shadow-blue-500/20",
+      accent: "via-blue-300/50",
+    },
+    Backend: {
+      bg: "from-teal-500/20 to-emerald-500/20",
+      border: "border-teal-300/30",
+      text: "text-teal-300",
+      iconBg: "bg-teal-500/10",
+      shadow: "hover:shadow-teal-500/20",
+      accent: "via-teal-300/50",
+    },
+    "AI/ML": {
+      bg: "from-emeraldx/20 to-cyanx/20",
+      border: "border-emeraldx/30",
+      text: "text-emeraldx",
+      iconBg: "bg-emeraldx/10",
+      shadow: "hover:shadow-emeraldx/20",
+      accent: "via-emeraldx/50",
+    },
+    DevOps: {
+      bg: "from-amber-500/20 to-rose-500/20",
+      border: "border-amber-300/30",
+      text: "text-amber-300",
+      iconBg: "bg-amber-500/10",
+      shadow: "hover:shadow-amber-500/20",
+      accent: "via-amber-300/50",
+    },
+    Other: {
+      bg: "from-slate-500/20 to-zinc-500/20",
+      border: "border-slate-300/30",
+      text: "text-slate-300",
+      iconBg: "bg-slate-500/10",
+      shadow: "hover:shadow-slate-500/20",
+      accent: "via-slate-300/50",
+    },
   };
 
   const proficiencyBadgeColor = {
@@ -43,8 +78,7 @@ export function SkillsGrid({ skills, showCategory = true }: SkillsGridProps) {
         if (skillList.length === 0) return null;
 
         const colors =
-          categoryColors[category as keyof typeof categoryColors] ||
-          categoryColors.Other;
+          categoryColors[category as keyof typeof categoryColors] || categoryColors.Other;
 
         return (
           <motion.div
@@ -73,9 +107,7 @@ export function SkillsGrid({ skills, showCategory = true }: SkillsGridProps) {
                 const Icon = skill.icon;
                 const proficiencyColor =
                   skill.proficiency &&
-                  proficiencyBadgeColor[
-                    skill.proficiency as keyof typeof proficiencyBadgeColor
-                  ];
+                  proficiencyBadgeColor[skill.proficiency as keyof typeof proficiencyBadgeColor];
 
                 return (
                   <motion.div
@@ -91,21 +123,21 @@ export function SkillsGrid({ skills, showCategory = true }: SkillsGridProps) {
                     className="group"
                   >
                     <div
-                      className={`relative h-full bg-gradient-to-br ${colors.bg} border ${colors.border} rounded-lg p-4 backdrop-blur-sm hover:shadow-lg hover:shadow-${colors.text}/30 transition-all overflow-hidden`}
+                      className={`relative h-full bg-gradient-to-br ${colors.bg} border ${colors.border} rounded-lg p-4 backdrop-blur-sm hover:shadow-lg ${colors.shadow} transition-all overflow-hidden`}
                     >
                       {/* Hover glow */}
-                      <div className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-0 group-hover:opacity-50 transition-opacity`} />
+                      <div
+                        className={`absolute inset-0 bg-gradient-to-br ${colors.bg} opacity-0 group-hover:opacity-50 transition-opacity`}
+                      />
 
                       <div className="relative z-10">
                         {/* Icon */}
-                        <div className={`inline-flex p-2 rounded-lg bg-${category}-500/10 mb-3`}>
+                        <div className={`inline-flex p-2 rounded-lg ${colors.iconBg} mb-3`}>
                           <Icon className={`w-5 h-5 ${colors.text}`} />
                         </div>
 
                         {/* Label */}
-                        <h4 className="font-semibold text-white text-sm mb-2">
-                          {skill.label}
-                        </h4>
+                        <h4 className="font-semibold text-white text-sm mb-2">{skill.label}</h4>
 
                         {/* Proficiency Badge */}
                         {skill.proficiency && (
@@ -119,7 +151,7 @@ export function SkillsGrid({ skills, showCategory = true }: SkillsGridProps) {
 
                       {/* Bottom accent */}
                       <div
-                        className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-${colors.text}/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity`}
+                        className={`absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent ${colors.accent} to-transparent opacity-0 group-hover:opacity-100 transition-opacity`}
                       />
                     </div>
                   </motion.div>

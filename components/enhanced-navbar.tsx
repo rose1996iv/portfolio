@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Menu, X, Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
+import { profile } from "@/lib/profile-v2";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -17,17 +18,17 @@ const navItems = [
 const socialLinks = [
   {
     icon: Github,
-    href: "https://github.com/rose1996iv",
+    href: profile.social.github,
     label: "GitHub",
   },
   {
     icon: Linkedin,
-    href: "https://www.linkedin.com/in/joseph-61734a17a",
+    href: profile.social.linkedin,
     label: "LinkedIn",
   },
   {
     icon: Mail,
-    href: "mailto:josephsaimonn@gmail.com",
+    href: `mailto:${profile.email}`,
     label: "Email",
   },
 ];
@@ -60,17 +61,12 @@ export function EnhancedNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center gap-2"
-          >
+          <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2 group">
               <div className="relative w-10 h-10 rounded-lg bg-gradient-to-br from-emeraldx to-cyanx flex items-center justify-center font-bold text-slate-900 group-hover:shadow-lg group-hover:shadow-emeraldx/50 transition-all">
                 J
               </div>
-              <span className="font-bold text-white hidden sm:inline">
-                Joseph
-              </span>
+              <span className="font-bold text-white hidden sm:inline">{profile.name}</span>
             </Link>
           </motion.div>
 
@@ -120,6 +116,7 @@ export function EnhancedNavbar() {
                     transition={{ delay: 0.3 + index * 0.1 }}
                     whileHover={{ y: -2 }}
                     className="p-2 rounded-lg text-slate-400 hover:text-emeraldx hover:bg-emeraldx/10 transition-all"
+                    aria-label={link.label}
                     title={link.label}
                   >
                     <Icon className="w-5 h-5" />
@@ -134,12 +131,10 @@ export function EnhancedNavbar() {
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsOpen(!isOpen)}
               className="md:hidden p-2 rounded-lg text-slate-300 hover:text-emeraldx hover:bg-emeraldx/10 transition-all"
+              aria-label={isOpen ? "Close navigation menu" : "Open navigation menu"}
+              aria-expanded={isOpen}
             >
-              {isOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </motion.button>
           </div>
         </div>
@@ -153,7 +148,10 @@ export function EnhancedNavbar() {
           height: isOpen ? "auto" : 0,
         }}
         transition={{ duration: 0.3 }}
-        className="md:hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-700/50"
+        aria-hidden={!isOpen}
+        className={`md:hidden overflow-hidden bg-slate-900/95 backdrop-blur-lg border-b border-slate-700/50 ${
+          isOpen ? "pointer-events-auto" : "pointer-events-none"
+        }`}
       >
         <div className="px-4 py-4 space-y-2">
           {navItems.map((item) => (
@@ -165,6 +163,7 @@ export function EnhancedNavbar() {
                 setIsOpen(false);
               }}
               className="block px-4 py-2 rounded-lg text-slate-300 hover:text-white hover:bg-emeraldx/10 transition-all"
+              tabIndex={isOpen ? 0 : -1}
             >
               {item.label}
             </motion.a>
@@ -183,6 +182,8 @@ export function EnhancedNavbar() {
                     rel="noopener noreferrer"
                     whileHover={{ y: -2 }}
                     className="p-3 rounded-lg text-slate-400 hover:text-emeraldx hover:bg-emeraldx/10 transition-all flex-1 flex items-center justify-center gap-2"
+                    aria-label={link.label}
+                    tabIndex={isOpen ? 0 : -1}
                   >
                     <Icon className="w-5 h-5" />
                     <span className="text-sm">{link.label}</span>

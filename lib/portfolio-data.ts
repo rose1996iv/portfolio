@@ -1,7 +1,6 @@
 import { fetchAllGitHubRepos, fetchGitHubStats } from "@/lib/github";
-import { profile } from "@/lib/profile";
+import { profile } from "@/lib/profile-v2";
 import { sortBy } from "@/lib/utils";
-
 
 /**
  * Dynamic portfolio data that merges static profile with GitHub data
@@ -10,18 +9,11 @@ import { sortBy } from "@/lib/utils";
 export async function getDynamicPortfolioData() {
   try {
     // Fetch GitHub data in parallel
-    const [repos, stats] = await Promise.all([
-      fetchAllGitHubRepos(),
-      fetchGitHubStats(),
-    ]);
+    const [repos, stats] = await Promise.all([fetchAllGitHubRepos(), fetchGitHubStats()]);
 
     // Filter repos that should be featured (manually selected in profile)
-    const featuredRepoNames = profile.projects.map((p) =>
-      p.repo.split("/").pop()
-    );
-    const featuredRepos = repos.filter((repo) =>
-      featuredRepoNames.includes(repo.name)
-    );
+    const featuredRepoNames = profile.projects.map((p) => p.repo.split("/").pop());
+    const featuredRepos = repos.filter((repo) => featuredRepoNames.includes(repo.name));
 
     // Extract unique languages from all repos
     const languages = new Set<string>();
@@ -38,9 +30,7 @@ export async function getDynamicPortfolioData() {
       },
       // Update projects with live GitHub data
       projects: profile.projects.map((staticProject) => {
-        const liveRepo = featuredRepos.find(
-          (r) => r.url === staticProject.repo
-        );
+        const liveRepo = featuredRepos.find((r) => r.html_url === staticProject.repo);
         return {
           ...staticProject,
           stars: liveRepo?.stargazers_count ?? staticProject.stars,
@@ -61,16 +51,10 @@ export async function getDynamicPortfolioData() {
       ...profile,
       allRepos: [],
       detectedLanguages: profile.skills
-        .filter((s) =>
-          ["Python", "TypeScript", "JavaScript", "Java", "C#"].includes(
-            s.label
-          )
-        )
+        .filter((s) => ["Python", "TypeScript", "JavaScript", "Java", "C#"].includes(s.label))
         .map((s) => s.label),
     };
   }
 }
 
-export type PortfolioData = Awaited<
-  ReturnType<typeof getDynamicPortfolioData>
->;
+export type PortfolioData = Awaited<ReturnType<typeof getDynamicPortfolioData>>;

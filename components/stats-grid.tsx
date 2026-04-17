@@ -10,14 +10,14 @@ interface StatsGridProps {
 
 export function StatsGrid({ statistics }: StatsGridProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
       {statistics.map((stat, index) => {
         const Icon = stat.icon;
         const isNumeric = typeof stat.value === "number";
 
         return (
           <motion.div
-            key={index}
+            key={stat.label}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -43,24 +43,16 @@ export function StatsGrid({ statistics }: StatsGridProps) {
                 <div className="mb-2">
                   {isNumeric ? (
                     <div className="text-3xl md:text-4xl font-bold text-white">
-                      <NumberTicker
-                        value={stat.value as number}
-                      />
-                      <span className="text-emeraldx text-lg ml-1">
-                        {stat.suffix || ""}
-                      </span>
+                      <NumberTicker value={stat.value as number} />
+                      <span className="text-emeraldx text-lg ml-1">{stat.suffix || ""}</span>
                     </div>
                   ) : (
-                    <div className="text-3xl md:text-4xl font-bold text-white">
-                      {stat.value}
-                    </div>
+                    <div className="text-3xl md:text-4xl font-bold text-white">{stat.value}</div>
                   )}
                 </div>
 
                 {/* Label */}
-                <p className="text-sm text-slate-300 font-medium">
-                  {stat.label}
-                </p>
+                <p className="text-sm text-slate-300 font-medium">{stat.label}</p>
               </div>
 
               {/* Bottom border glow */}

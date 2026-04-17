@@ -18,7 +18,7 @@ export function AchievementsGrid({ achievements, maxItems = 6 }: AchievementsGri
 
         return (
           <motion.div
-            key={index}
+            key={`${achievement.date}-${achievement.title}`}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -37,9 +37,7 @@ export function AchievementsGrid({ achievements, maxItems = 6 }: AchievementsGri
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-semibold text-white mb-2">
-                  {achievement.title}
-                </h3>
+                <h3 className="text-lg font-semibold text-white mb-2">{achievement.title}</h3>
 
                 {/* Description */}
                 <p className="text-sm text-slate-300 mb-4 leading-relaxed">
@@ -48,9 +46,7 @@ export function AchievementsGrid({ achievements, maxItems = 6 }: AchievementsGri
 
                 {/* Footer */}
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-emeraldx">
-                    {achievement.date}
-                  </span>
+                  <span className="text-xs font-medium text-emeraldx">{achievement.date}</span>
                   <span className="text-xs px-2 py-1 rounded-full bg-slate-800/50 border border-slate-700/50 text-slate-400 capitalize">
                     {achievement.category}
                   </span>
