@@ -52,6 +52,13 @@ jobs:
           # Ensure files/folders starting with '_' are preserved by GitHub Pages
           touch out/.nojekyll
 
+      - name: Show exported files (debug)
+        run: |
+          echo "-- out directory listing --"
+          ls -la out || true
+          echo "-- recursive tree (first 200 lines) --"
+          ls -laR out | sed -n '1,200p' || true
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
