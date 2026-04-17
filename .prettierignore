@@ -1,0 +1,10 @@
+.next
+out
+dist
+build
+node_modules
+.git
+.env*
+*.log
+coverage
+.DS_Store
