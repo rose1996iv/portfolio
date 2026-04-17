@@ -59,6 +59,17 @@ jobs:
           echo "-- recursive tree (first 200 lines) --"
           ls -laR out | sed -n '1,200p' || true
 
+      - name: Rehome exported files under /portfolio (Pages expects this)
+        run: |
+          echo "Moving exported files into out/portfolio to match basePath"
+          mkdir -p out/portfolio
+          for entry in out/* out/.[!.]* out/..?*; do
+            if [ -e "$entry" ] && [ "$entry" != "out/portfolio" ]; then
+              mv "$entry" out/portfolio/ || true
+            fi
+          done
+          touch out/portfolio/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
