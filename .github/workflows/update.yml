@@ -28,7 +28,8 @@ jobs:
       - name: Fetch latest GitHub data
         run: npm run build
         env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TOKEN: ${{ vars.TOKEN }}
 
       - name: Check for changes
         id: changes
