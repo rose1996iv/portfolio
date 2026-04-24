@@ -12,13 +12,13 @@ import { Timeline } from "@/components/timeline";
 import { SkillsGrid } from "@/components/skills-grid";
 import { AchievementsGrid } from "@/components/achievements-grid";
 import { CertificationsGrid } from "@/components/certifications-grid";
-import { ProjectCard } from "@/components/project-card";
+import { GitHubProjects } from "@/components/github-projects";
 import { MatrixBackground } from "@/components/matrix-background";
 
 import { profile } from "@/lib/profile-v2";
 
 export default function Home() {
-  const projects = profile.projects || [];
+
   const experience = profile.experience || [];
   const education = profile.education || [];
   const skills = profile.skills || [];
@@ -149,23 +149,7 @@ export default function Home() {
         subtitle="Showcase of my recent and notable work"
         icon={Zap}
       >
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
-          {projects.map((project, index) => (
-            <ProjectCard
-              key={project.name}
-              name={project.name}
-              description={project.description}
-              language={project.language}
-              stars={project.stars}
-              repo={project.repo}
-              demo={project.demo}
-              updated={project.updated}
-              topics={project.topics}
-              featured={project.featured}
-              index={index}
-            />
-          ))}
-        </div>
+        <GitHubProjects />
       </Section>
 
       {/* Certifications Section */}
