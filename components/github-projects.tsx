@@ -8,6 +8,52 @@ import { cn } from "@/lib/utils";
 
 const GITHUB_USERNAME = "rose1996iv";
 
+/**
+ * Curated fallback descriptions for repos without a GitHub description.
+ * Key = repo name (exact match, case-sensitive).
+ */
+const REPO_DESCRIPTIONS: Record<string, string> = {
+  portfolio:
+    "Personal portfolio website built with Next.js, TypeScript, and Tailwind CSS — featuring live GitHub repo sync, matrix animations, and a full résumé showcase.",
+  BotFather:
+    "Intelligent Telegram/chatbot framework powered by Python — handles multi-turn conversations, RAG retrieval, and multilingual Myanmar student support.",
+  "gangaw-baptist-church":
+    "Full-stack church website for Gangaw Baptist Church built with Next.js and Payload CMS, featuring live sermons, blog posts, and a streaming integration.",
+  "FlightBooking-Using-C":
+    "Console-based flight booking system written in C — supports in-memory passenger management, flight search by destination or number, and sorted listings.",
+  livewallpaper:
+    "A collection of interactive animated wallpapers for Lively Wallpaper, including a Cyberpunk clock with 12/24-hour toggle and dynamic theme controls.",
+  "rose1996iv":
+    "GitHub profile README repository — showcasing research interests, skills, and featured projects with a custom-designed profile card.",
+  beaconbookstore:
+    "Online bookstore platform built with Next.js and TypeScript, featuring product listings, cart management, and a clean modern storefront UI.",
+  "beacon-academy-erp":
+    "Enterprise Resource Planning system for Beacon Academy built with Python — manages student records, attendance, scheduling, and administrative workflows.",
+};
+
+/**
+ * Generate a smart description from repo metadata when no description exists.
+ */
+function generateDescription(name: string, language: string | null, topics: string[]): string {
+  // Check curated map first
+  if (REPO_DESCRIPTIONS[name]) return REPO_DESCRIPTIONS[name];
+
+  // Build from language + topics
+  const parts: string[] = [];
+  const readable = name.replace(/[-_]/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2");
+
+  if (language) parts.push(`A ${language} project`);
+  else parts.push("A project");
+
+  parts.push(`— ${readable}`);
+
+  if (topics.length > 0) {
+    parts.push(`| Topics: ${topics.slice(0, 4).join(", ")}`);
+  }
+
+  return parts.join(" ");
+}
+
 interface GitHubRepo {
   id: number;
   name: string;
@@ -208,7 +254,7 @@ export function GitHubProjects() {
               <ProjectCard
                 key={repo.id}
                 name={repo.name}
-                description={repo.description ?? "No description provided."}
+                description={repo.description ?? generateDescription(repo.name, repo.language, repo.topics)}
                 language={repo.language}
                 stars={repo.stargazers_count}
                 repo={repo.html_url}
